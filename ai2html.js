@@ -11,6 +11,8 @@ function main() {
 // Remember to add an entry in CHANGELOG when updating the version number.
 var scriptVersion = "0.65.5";
 
+var globeVersion = "0.4";
+
 // ai2html is a script for Adobe Illustrator that converts your Illustrator document into html and css.
 // Copyright (c) 2011-2015 The New York Times Company
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -111,10 +113,10 @@ var defaultBaseSettings = {
   ai2html_environment: {defaultValue: scriptEnvironment, includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
   settings_version: {defaultValue: scriptVersion, includeInSettingsBlock: true, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
   create_promo_image: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
-  image_format: {defaultValue: ["auto"], includeInSettingsBlock: true, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "array", possibleValues: "jpg, png, png24", notes: "Images will be generated in mulitple formats if multiple formats are listed, separated by commas. The first format will be used in the html. Sometimes this is useful to compare which format will have a smaller file size."},
-  write_image_files: {defaultValue: "yes", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: "Set this to \u201Cno\u201D to skip writing the image files. Generally only use this after you have run the script once with this setting set to \u201Cyes.\u201D"},
+  image_format: {defaultValue: ["png24"], includeInSettingsBlock: true, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "array", possibleValues: "jpg, png, png24", notes: "Images will be generated in mulitple formats if multiple formats are listed, separated by commas. The first format will be used in the html. Sometimes this is useful to compare which format will have a smaller file size."},
+  write_image_files: {defaultValue: "yes", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: "Set this to “no” to skip writing the image files. Generally only use this after you have run the script once with this setting set to “yes.”"},
   responsiveness: {defaultValue: "fixed", includeInSettingsBlock: true, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "fixed, dynamic", notes: "Dynamic responsiveness means ai graphics will scale to fill the container they are placed in."},
-  max_width: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "integer", possibleValues: "", notes: "Blank or any positive number in pixels, but do not write \u201Cpx\u201D - blank means artboards will set max size, the max width is not included in the html stub, instead it is written to the config file so that the max width can be applied to the template’s container."},
+  max_width: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "integer", possibleValues: "", notes: "Blank or any positive number in pixels, but do not write “px” - blank means artboards will set max size, the max width is not included in the html stub, instead it is written to the config file so that the max width can be applied to the template’s container."},
   output: {defaultValue: "one-file", includeInSettingsBlock: true, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "one-file, multiple-files", notes: "One html file containing all the artboards or a separate html file for each artboard."},
   project_name: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: "Use this to set a custom project name. The project name is being used in output filenames, class names, etc."},
   html_output_path: {defaultValue: "/ai2html-output/", includeInSettingsBlock: true, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "folderPath", possibleValues: "", notes: "Allows user to change folder to write html files, path should be written relative to ai file location. This is ignored if the project_type in the yml is ai2html."},
@@ -127,16 +129,16 @@ var defaultBaseSettings = {
   png_transparent: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: ""},
   png_number_of_colors: {defaultValue: 128, includeInSettingsBlock: true, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "integer", possibleValues: "2 to 256", notes: ""},
   jpg_quality: {defaultValue: 60, includeInSettingsBlock: true, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "integer", possibleValues: "0 to 100", notes: ""},
-  center_html_output: {defaultValue: "true", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: "Adds \u201Cmargin:0 auto;\u201D to the div containing the ai2html output."},
+  center_html_output: {defaultValue: "true", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: "Adds “margin:0 auto;” to the div containing the ai2html output."},
   use_2x_images_if_possible: {defaultValue: "yes", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: ""},
-  use_lazy_loader: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: ""},
-  include_resizer_css_js: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: ""},
-  include_resizer_classes: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: ""},
-  include_resizer_widths: {defaultValue: "yes", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: "If set to \u201Cyes\u201D, ai2html adds data-min-width and data-max-width attributes to each artboard"},
+  use_lazy_loader: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: "This setting is no longer needed beginning with v0.60 unless you are using the old resizer classes for legacy reasons."},
+  include_resizer_css_js: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: "This setting is no longer needed beginning with v0.60 unless you are using the old resizer classes for legacy reasons."},
+  include_resizer_classes: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: "This setting is no longer needed beginning with v0.60 unless you are using the old resizer classes for legacy reasons."},
+  include_resizer_widths: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: "If set to “yes”, ai2html adds data-min-width and data-max-width attributes to each artboard"},
   include_resizer_script: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: ""},
   svg_embed_images: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: ""},
   render_rotated_skewed_text_as: {defaultValue: "html", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "image, html", notes: ""},
-  show_completion_dialog_box: {defaultValue: "yes", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: "Set this to \u201Cno\u201D if you don't want to see the dialog box confirming completion of the script."},
+  show_completion_dialog_box: {defaultValue: "yes", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: "Set this to “no” if you don't want to see the dialog box confirming completion of the script."},
   clickable_link: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: "If you put a url in this field, an <a> tag will be added, wrapping around the output and pointing to that url."},
   testing_mode: {defaultValue: "no", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "yesNo", possibleValues: "", notes: ""},
   last_updated_text: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: true, inputType: "text", possibleValues: "", notes: ""},
@@ -156,8 +158,10 @@ var defaultBaseSettings = {
   scoop_asset_id: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
   scoop_username: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
   scoop_slug: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
-  scoop_external_edit_key: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""}
-};
+  scoop_external_edit_key: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
+  html_base_path: {defaultValue: "https://beta.theglobeandmail.com/files/graphics/", includeInSettingsBlock: true, includeInConfigFile: true, useQuoteMarksInConfigFile: true, inputType: "text", possibleValues: "", notes: "Base path for image URL"},
+  build: {defaultValue: 0, includeInSettingsBlock: true, includeInConfigFile: true, useQuoteMarksInConfigFile: false, inputType: "integer", possibleValues: "", notes: "Build value, increments"}
+}
 
 // End of settings blocks copied from Google Spreadsheet.
 
@@ -246,7 +250,23 @@ var fonts = [
   {"aifont":"Stymie-Thin","family":"nyt-stymie,arial,helvetica,sans-serif","weight":"300","style":""},
   {"aifont":"Stymie-UltraLight","family":"nyt-stymie,arial,helvetica,sans-serif","weight":"300","style":""},
   {"aifont":"NYTMagSans-Regular","family":"'nyt-mag-sans',arial,helvetica,sans-serif","weight":"500","style":""},
-  {"aifont":"NYTMagSans-Bold","family":"'nyt-mag-sans',arial,helvetica,sans-serif","weight":"700","style":""}
+  {"aifont":"NYTMagSans-Bold","family":"'nyt-mag-sans',arial,helvetica,sans-serif","weight":"700","style":""},
+  {"aifont":"Pratt","family":"PrattRegular,Pratt,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"Pratt-Italic","family":"PrattItalic,Pratt-Italic,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"Pratt-Bold","family":"PrattBold,Pratt-Bold,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"Pratt-BoldItalic","family":"PrattBoldItalic,Pratt-BoldItalic,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"Pratt-Light","family":"PrattLight,Pratt-Light,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"Pratt-LightItalic","family":"PrattLightItalic,Pratt-LightItalic,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"Pratt-Heavy","family":"PrattHeavy,Pratt-Heavy,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"Pratt-HeavyItalic","family":"PrattHeavyItalic,Pratt-HeavyItalic,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"PrattMicro","family":"PrattMicro,Pratt-Micro,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"PrattFine","family":"PrattFine,Pratt-Fine,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"PrattFine-Bold","family":"PrattFineBold,Pratt-FineBold,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"PrattFine-BoldItalic","family":"PrattFineBoldItalic,Pratt-FineBoldItalic,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"GMsanC-Regular","family":"GMSansC,GMSanC,GMSanC-Regular,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"GMsanC-Italic","family":"GMSansCItalic,GMSanCItalic,GMSanC-RegularItalic,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"GMsanC-Bold","family":"GMSansCBold,GMSanCBold,GMsanC-Bold,helvetica,sans-serif","weight":"","style":""},
+  {"aifont":"GMsanC-BoldItalic","family":"GMSansCBoldItalic,GMSanCBoldItalic,GMsanC-BoldItalic,helvetica,sans-serif","weight":"","style":""}
 ];
 
 // CSS text-transform equivalents
@@ -300,7 +320,7 @@ var nyt5Breakpoints = [
 ];
 
 // TODO: add these to settings spreadsheet
-var nameSpace           = "g-";
+var nameSpace           = "gi-";
 var cssPrecision        = 4;
 // If all three RBG channels (0-255) are below this value, convert text fill to pure black.
 var rgbBlackThreshold  = 36;
@@ -549,6 +569,11 @@ function render() {
 
   docName = docSettings.project_name || doc.name.replace(/(.+)\.[aieps]+$/,"$1").replace(/ +/g,"-");
   docName = makeKeyword(docName);
+  docSettings.project_name = docName;
+
+  if (scriptEnvironment === "globe") {
+    docSettings.html_output_path = docSettings.project_name + "/";
+  }
 
   if (docSettings.image_source_path === null) {
     docSettings.image_source_path = docSettings.image_output_path;
@@ -570,6 +595,8 @@ function render() {
   unlockObjects(); // Unlock containers and clipping masks
   var masks = findMasks(); // identify all clipping masks and their contents
   var artboardContent = {html: "", css: "", js: ""};
+
+  incrementBuild(docSettings);
 
   forEachUsableArtboard(function(activeArtboard, abNumber) {
     var abSettings = getArtboardSettings(activeArtboard);
@@ -1172,7 +1199,7 @@ function showEngineInfo() {
 }
 
 function detectScriptEnvironment() {
-  var env = detectTimesFonts() ? 'nyt' : '';
+  var env = detectTimesFonts() ? 'nyt' : 'globe';
   // Handle case where user seems to be at NYT but is running ai2html outside of Preview
   if (env == 'nyt' && !fileExists(docPath + "../config.yml")) {
     if(confirm("You seem to be running ai2html outside of NYT Preview.\nContinue in non-Preview mode?", true)) {
@@ -1725,7 +1752,17 @@ function findMasks() {
   return found;
 }
 
+// ================================================
+// increment build value
+// ================================================
 
+function incrementBuild(settings) {
+  // no-shadow
+  var buildLayer = doc.layers.getByName("ai2html-settings").textFrames.getByName("ai2html-build");
+  var buildValue = Number(buildLayer.paragraphs[1].contents);
+  docSettings.build = isNaN(buildValue) ? 1 : buildValue + 1;
+  buildLayer.paragraphs[1].contents = docSettings.build.toString();
+}
 
 // ==============================
 // ai2html text functions
@@ -2481,6 +2518,10 @@ function generateImageHtml(ab, settings) {
       src = settings.image_source_path + abName + "." + extension,
       html;
 
+  if (scriptEnvironment === "globe") {
+    src += "?token=" + settings.build;
+  }
+
   html = '\t\t<img id="' + imgId + '" class="' + nameSpace + 'aiImg"';
   if (isTrue(settings.use_lazy_loader)) {
     html += ' data-src="' + src + '"';
@@ -2952,8 +2993,25 @@ function getResizerScript() {
 
 // Write an HTML page to a file for NYT Preview
 function outputLocalPreviewPage(textForFile, localPreviewDestination, settings) {
-  var localPreviewTemplateText = readTextFile(docPath + settings.local_preview_template);
-  settings.ai2htmlPartial = textForFile; // TODO: don't modify global settings this way
+  if (scriptEnvironment === "globe") {
+    var localPreviewTemplateText = "<%=ai2htmlPartial%>";
+    var re = new RegExp(settings.html_base_path, "g");
+		var globePreviewHeader = "<!DOCTYPE html>\r";
+    globePreviewHeader += "<html>\r";
+    globePreviewHeader += "<head>\r";
+    globePreviewHeader += "<meta charset='utf-8' />\r";
+		globePreviewHeader += "<meta name='viewport' content='width=device-width, initial-scale=1'>\r";
+		globePreviewHeader += "<link rel='stylesheet' type='text/css' href='https://beta.theglobeandmail.com/legacy/media/www/css/global.fonts.css'>\r";
+    globePreviewHeader += "</head>\r";
+    globePreviewHeader += "<body>\r";
+		localPreviewTemplateText = globePreviewHeader + localPreviewTemplateText;
+    localPreviewTemplateText += "</body>\r";
+    localPreviewTemplateText += "</html>\r";
+    settings.ai2htmlPartial = textForFile.replace(re, "./");
+  } else {
+    var localPreviewTemplateText = readTextFile(docPath + settings.local_preview_template);
+    settings.ai2htmlPartial = textForFile; // TODO: don't modify global settings this way
+  }
   var localPreviewHtml = applyTemplate(localPreviewTemplateText, settings);
   saveTextFile(localPreviewDestination, localPreviewHtml);
 }
@@ -3010,7 +3068,7 @@ function generateOutputHtml(content, pageName, settings) {
   }
 
   // HTML
-  html = '<div id="' + containerId + '" class="ai2html">\r';
+  html = '<div id="' + containerId + '" class="gi ai2html">\r';
   if (linkSrc) {
     // optional link around content
     html += "\t<a class='" + nameSpace + "ai2htmlLink' href='" + linkSrc + "'>\r";
@@ -3048,6 +3106,10 @@ function generateOutputHtml(content, pageName, settings) {
   checkForOutputFolder(htmlFileDestinationFolder, "html_output_path");
   htmlFileDestination = htmlFileDestinationFolder + pageName + settings.html_output_extension;
 
+  if (scriptEnvironment === "globe") {
+    htmlFileDestination = docPath + pageName + settings.html_output_extension;
+  }
+
   if (settings.output == 'one-file' && previewProjectType == 'ai2html') {
     htmlFileDestination = htmlFileDestinationFolder + "index" + settings.html_output_extension;
   }
@@ -3058,7 +3120,11 @@ function generateOutputHtml(content, pageName, settings) {
   // process local preview template if appropriate
   if (settings.local_preview_template !== "") {
     // TODO: may have missed a condition, need to compare with original version
-    var previewFileDestination = htmlFileDestinationFolder + pageName + ".preview.html";
+    if (scriptEnvironment === "globe") {
+			var previewFileDestination = docPath + pageName + ".preview.html";
+    } else {
+      var previewFileDestination = htmlFileDestinationFolder + pageName + ".preview.html";
+    }
     outputLocalPreviewPage(textForFile, previewFileDestination, settings);
   }
 }
