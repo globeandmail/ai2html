@@ -2996,15 +2996,15 @@ function outputLocalPreviewPage(textForFile, localPreviewDestination, settings) 
   if (scriptEnvironment === "globe") {
     var localPreviewTemplateText = "<%=ai2htmlPartial%>";
     var re = new RegExp(settings.html_base_path, "g");
-		var globePreviewHeader = "<!DOCTYPE html>\r";
+    var globePreviewHeader = "<!DOCTYPE html>\r";
     globePreviewHeader += "<html>\r";
     globePreviewHeader += "<head>\r";
     globePreviewHeader += "<meta charset='utf-8' />\r";
-		globePreviewHeader += "<meta name='viewport' content='width=device-width, initial-scale=1'>\r";
-		globePreviewHeader += "<link rel='stylesheet' type='text/css' href='https://beta.theglobeandmail.com/legacy/media/www/css/global.fonts.css'>\r";
+    globePreviewHeader += "<meta name='viewport' content='width=device-width, initial-scale=1'>\r";
+    globePreviewHeader += "<link rel='stylesheet' type='text/css' href='https://beta.theglobeandmail.com/legacy/media/www/css/global.fonts.css'>\r";
     globePreviewHeader += "</head>\r";
     globePreviewHeader += "<body>\r";
-		localPreviewTemplateText = globePreviewHeader + localPreviewTemplateText;
+    localPreviewTemplateText = globePreviewHeader + localPreviewTemplateText;
     localPreviewTemplateText += "</body>\r";
     localPreviewTemplateText += "</html>\r";
     settings.ai2htmlPartial = textForFile.replace(re, "./");
@@ -3121,7 +3121,7 @@ function generateOutputHtml(content, pageName, settings) {
   if (settings.local_preview_template !== "") {
     // TODO: may have missed a condition, need to compare with original version
     if (scriptEnvironment === "globe") {
-			var previewFileDestination = docPath + pageName + ".preview.html";
+      var previewFileDestination = docPath + pageName + ".preview.html";
     } else {
       var previewFileDestination = htmlFileDestinationFolder + pageName + ".preview.html";
     }
