@@ -1757,7 +1757,6 @@ function findMasks() {
 // ================================================
 
 function incrementBuild(settings) {
-  // no-shadow
   var buildLayer = doc.layers.getByName("ai2html-settings").textFrames.getByName("ai2html-build");
   var buildValue = Number(buildLayer.paragraphs[1].contents);
   docSettings.build = isNaN(buildValue) ? 1 : buildValue + 1;
