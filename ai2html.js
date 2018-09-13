@@ -11,7 +11,7 @@ function main() {
 // Remember to add an entry in CHANGELOG when updating the version number.
 var scriptVersion = "0.65.5";
 
-var globeVersion = "0.4";
+var globeVersion = "0.5";
 
 // ai2html is a script for Adobe Illustrator that converts your Illustrator document into html and css.
 // Copyright (c) 2011-2015 The New York Times Company
@@ -159,7 +159,7 @@ var defaultBaseSettings = {
   scoop_username: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
   scoop_slug: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
   scoop_external_edit_key: {defaultValue: "", includeInSettingsBlock: false, includeInConfigFile: false, useQuoteMarksInConfigFile: false, inputType: "text", possibleValues: "", notes: ""},
-  html_base_path: {defaultValue: "https://beta.theglobeandmail.com/files/graphics/", includeInSettingsBlock: true, includeInConfigFile: true, useQuoteMarksInConfigFile: true, inputType: "text", possibleValues: "", notes: "Base path for image URL"},
+  html_base_path: {defaultValue: "https://www.theglobeandmail.com/files/graphics/", includeInSettingsBlock: true, includeInConfigFile: true, useQuoteMarksInConfigFile: true, inputType: "text", possibleValues: "", notes: "Base path for image URL"},
   build: {defaultValue: 0, includeInSettingsBlock: true, includeInConfigFile: true, useQuoteMarksInConfigFile: false, inputType: "integer", possibleValues: "", notes: "Build value, increments"}
 };
 
